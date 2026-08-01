@@ -3,28 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BTS Ambient Sparkle & Magic Shop</title>
+  <title>✨ BTS Whimsical Album Galaxy ✨</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&family=Quicksand:wght@400;600;700&display=swap');
 
     :root {
-      --bg-dark: #0B0712;
-      --accent-purple: #9D4EDD;
-      --accent-glow: #E0AFA0;
-      --glass-bg: rgba(255, 255, 255, 0.04);
-      --glass-border: rgba(255, 255, 255, 0.12);
-      --glass-solid: rgba(18, 12, 28, 0.85);
+      --pastel-purple: #D8B4F8;
+      --pastel-pink: #FFC8DD;
+      --pastel-blue: #BDE0FE;
+      --pastel-yellow: #FEF9C3;
+      --whimsy-bg: #0d081f;
+      --glass-bubble: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.25);
     }
 
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Quicksand', sans-serif;
     }
 
     body {
-      background-color: var(--bg-dark);
+      background: radial-gradient(circle at 50% 20%, #1e1138 0%, var(--whimsy-bg) 70%);
       color: #FFFFFF;
       min-height: 100vh;
       overflow-x: hidden;
@@ -32,6 +33,7 @@
       padding-bottom: 120px;
     }
 
+    /* Starry Night Sky Layer */
     #sparkle-canvas {
       position: fixed;
       top: 0;
@@ -42,34 +44,56 @@
       z-index: 10;
     }
 
-    .glow-sphere {
+    /* Floating Whimsical Clouds / Nebula Glows */
+    .nebula {
       position: absolute;
-      width: 450px;
-      height: 450px;
-      background: radial-gradient(circle, rgba(157, 78, 221, 0.3) 0%, rgba(0,0,0,0) 70%);
-      top: -100px;
-      left: 50%;
-      transform: translateX(-50%);
+      border-radius: 50%;
       filter: blur(90px);
+      pointer-events: none;
       z-index: 1;
+      animation: float 12s ease-in-out infinite alternate;
     }
 
+    .nebula-1 {
+      width: 450px;
+      height: 450px;
+      background: rgba(216, 180, 248, 0.25);
+      top: -50px;
+      left: 10%;
+    }
+
+    .nebula-2 {
+      width: 500px;
+      height: 500px;
+      background: rgba(255, 200, 221, 0.2);
+      top: 300px;
+      right: 5%;
+      animation-delay: -6s;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px) rotate(0deg); }
+      100% { transform: translateY(30px) rotate(10deg); }
+    }
+
+    /* Whimsical Header Navigation */
     nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 2rem 10%;
+      padding: 2.5rem 8%;
       position: relative;
       z-index: 20;
     }
 
     .logo {
-      font-weight: 700;
-      letter-spacing: 3px;
-      font-size: 1.2rem;
-      background: linear-gradient(135deg, #FFF, var(--accent-purple));
+      font-family: 'Fredoka', cursive;
+      font-size: 1.6rem;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, var(--pastel-pink), var(--pastel-purple), var(--pastel-blue));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px rgba(216, 180, 248, 0.5);
     }
 
     .nav-links {
@@ -79,227 +103,244 @@
     }
 
     .nav-links a {
-      color: rgba(255, 255, 255, 0.7);
+      color: rgba(255, 255, 255, 0.8);
       text-decoration: none;
-      font-size: 0.9rem;
-      letter-spacing: 1px;
-      transition: color 0.3s ease;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
     }
 
     .nav-links a:hover {
-      color: #FFF;
+      color: var(--pastel-pink);
+      text-shadow: 0 0 10px var(--pastel-pink);
     }
 
+    /* Hero Banner */
     .hero {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       text-align: center;
-      padding: 4rem 1rem 2rem 1rem;
+      padding: 3rem 1rem 1rem 1rem;
       position: relative;
       z-index: 20;
     }
 
-    .badge {
-      font-size: 0.75rem;
+    .whimsy-pill {
+      display: inline-block;
+      font-family: 'Fredoka', cursive;
+      font-size: 0.85rem;
       letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 6px 16px;
-      border-radius: 20px;
-      background: rgba(157, 78, 221, 0.15);
-      border: 1px solid rgba(157, 78, 221, 0.3);
-      color: #C77DFF;
+      padding: 8px 20px;
+      border-radius: 50px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px dashed var(--pastel-purple);
+      color: var(--pastel-yellow);
       margin-bottom: 1.5rem;
+      box-shadow: 0 0 15px rgba(216, 180, 248, 0.2);
     }
 
     h1 {
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      font-weight: 700;
-      line-height: 1.1;
-      max-width: 800px;
-      margin-bottom: 1.5rem;
-    }
-
-    .glitter-text {
-      background: linear-gradient(
-        135deg,
-        #FFFFFF 0%,
-        #E0AFA0 25%,
-        #C77DFF 50%,
-        #FFFFFF 75%,
-        #7B2CBF 100%
-      );
-      background-size: 200% auto;
+      font-family: 'Fredoka', cursive;
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 600;
+      line-height: 1.2;
+      max-width: 850px;
+      margin: 0 auto 1rem auto;
+      background: linear-gradient(135deg, #FFFFFF, var(--pastel-pink), var(--pastel-purple));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: shine 4s linear infinite;
-    }
-
-    @keyframes shine {
-      to { background-position: 200% center; }
     }
 
     p.subtitle {
-      color: rgba(255, 255, 255, 0.6);
-      max-width: 500px;
-      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.7);
+      max-width: 550px;
+      margin: 0 auto;
+      font-size: 1.05rem;
       line-height: 1.6;
     }
 
-    /* Cards Grid */
-    .cards-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      width: 100%;
-      max-width: 950px;
-      padding: 0 2rem;
-      margin: 2.5rem auto 4rem auto;
+    /* --- Interactive Whimsical Album Carousel Section --- */
+    .album-section {
       position: relative;
       z-index: 20;
+      margin: 3rem auto;
+      width: 100%;
+      max-width: 1100px;
+      padding: 0 1.5rem;
     }
 
-    .glass-card {
-      background: var(--glass-bg);
+    .section-title {
+      font-family: 'Fredoka', cursive;
+      text-align: center;
+      font-size: 1.8rem;
+      color: var(--pastel-pink);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .carousel-container {
+      display: flex;
+      gap: 1.5rem;
+      overflow-x: auto;
+      padding: 1.5rem 0.5rem;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      scrollbar-color: var(--pastel-purple) transparent;
+    }
+
+    .carousel-container::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .carousel-container::-webkit-scrollbar-thumb {
+      background: var(--pastel-purple);
+      border-radius: 10px;
+    }
+
+    /* Whimsical Bubble Album Card */
+    .album-card {
+      flex: 0 0 280px;
+      scroll-snap-align: center;
+      background: var(--glass-bubble);
       border: 1px solid var(--glass-border);
-      backdrop-filter: blur(12px);
-      border-radius: 20px;
-      padding: 2rem;
-      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      backdrop-filter: blur(16px);
+      border-radius: 24px;
+      padding: 1.5rem;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      cursor: pointer;
     }
 
-    .glass-card:hover {
-      border-color: rgba(199, 125, 255, 0.5);
-      box-shadow: 0 10px 30px rgba(157, 78, 221, 0.2);
+    .album-card:hover {
+      transform: translateY(-12px) scale(1.03);
+      border-color: var(--pastel-pink);
+      box-shadow: 0 15px 35px rgba(255, 200, 221, 0.25);
+      background: rgba(255, 255, 255, 0.12);
     }
 
-    .card-icon {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      color: #C77DFF;
-    }
-
-    .glass-card h3 {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .glass-card p {
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.5);
-      line-height: 1.5;
-    }
-
-    /* Magic Shop Quote Card Styling */
-    .magic-shop-card {
-      grid-column: span 1;
-      background: linear-gradient(145deg, rgba(157, 78, 221, 0.12), rgba(11, 7, 18, 0.6));
-      border: 1px solid rgba(199, 125, 255, 0.3);
+    .album-cover {
+      width: 140px;
+      height: 140px;
+      border-radius: 20px;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
       position: relative;
       overflow: hidden;
+      background: linear-gradient(135deg, var(--c1), var(--c2));
     }
 
-    @media (min-width: 850px) {
-      .magic-shop-card {
-        grid-column: span 2;
-      }
+    .album-year {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--pastel-yellow);
+      background: rgba(0, 0, 0, 0.3);
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 0.6rem;
     }
 
-    .quote-box {
-      margin: 1.5rem 0;
-      min-height: 90px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .quote-text {
-      font-size: 1.15rem;
-      font-weight: 300;
-      line-height: 1.6;
+    .album-title {
+      font-family: 'Fredoka', cursive;
+      font-size: 1.2rem;
+      margin-bottom: 0.4rem;
       color: #FFFFFF;
-      font-style: italic;
-      transition: opacity 0.3s ease, transform 0.3s ease;
     }
 
-    .quote-source {
-      font-size: 0.8rem;
-      color: #C77DFF;
-      margin-top: 0.8rem;
-      font-style: normal;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+    .album-era {
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.4;
     }
 
-    .btn-magic {
-      align-self: flex-start;
-      background: linear-gradient(135deg, #9D4EDD, #C77DFF);
-      color: #0B0712;
-      font-weight: 600;
-      font-size: 0.85rem;
-      letter-spacing: 1px;
-      border: none;
-      padding: 10px 20px;
+    /* Whimsical Magic Shop Drawer Quote Card */
+    .magic-box-section {
+      position: relative;
+      z-index: 20;
+      max-width: 800px;
+      margin: 2rem auto 5rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .magic-card {
+      background: radial-gradient(circle at top left, rgba(216, 180, 248, 0.15), rgba(13, 8, 31, 0.8));
+      border: 2px dashed rgba(255, 200, 221, 0.4);
+      backdrop-filter: blur(20px);
       border-radius: 30px;
+      padding: 2.5rem;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    }
+
+    .magic-card h3 {
+      font-family: 'Fredoka', cursive;
+      font-size: 1.6rem;
+      color: var(--pastel-yellow);
+      margin-bottom: 1rem;
+    }
+
+    .quote-display {
+      font-size: 1.15rem;
+      font-style: italic;
+      color: #FFFFFF;
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      transition: opacity 0.3s ease;
+    }
+
+    .btn-whimsy {
+      font-family: 'Fredoka', cursive;
+      font-size: 1rem;
+      background: linear-gradient(135deg, var(--pastel-pink), var(--pastel-purple));
+      color: #1e1138;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 50px;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(157, 78, 221, 0.3);
+      box-shadow: 0 5px 20px rgba(216, 180, 248, 0.4);
     }
 
-    .btn-magic:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(199, 125, 255, 0.5);
-      background: #FFFFFF;
+    .btn-whimsy:hover {
+      transform: scale(1.08) rotate(-2deg);
+      background: var(--pastel-yellow);
     }
 
-    /* Player Bar & Drawer */
+    /* Audio Bar */
     .player-bar {
       position: fixed;
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
       width: calc(100% - 40px);
-      max-width: 850px;
-      background: var(--glass-solid);
+      max-width: 800px;
+      background: rgba(20, 12, 38, 0.85);
       border: 1px solid var(--glass-border);
-      backdrop-filter: blur(16px);
-      border-radius: 20px;
+      backdrop-filter: blur(20px);
+      border-radius: 30px;
       padding: 12px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       z-index: 100;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-    }
-
-    .track-info {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      min-width: 200px;
-    }
-
-    .album-art {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #7B2CBF, #C77DFF);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      box-shadow: 0 4px 12px rgba(157, 78, 221, 0.4);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
     }
 
     .track-details h4 {
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-bottom: 2px;
+      font-family: 'Fredoka', cursive;
+      font-size: 1rem;
+      color: var(--pastel-pink);
     }
 
     .track-details p {
@@ -307,410 +348,187 @@
       color: rgba(255, 255, 255, 0.5);
     }
 
-    .controls {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .btn-control {
-      background: none;
-      border: none;
-      color: rgba(255, 255, 255, 0.7);
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: color 0.2s ease, transform 0.2s ease;
-    }
-
-    .btn-control:hover {
-      color: #FFF;
-      transform: scale(1.1);
-    }
-
     .btn-play {
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
-      background: #C77DFF;
-      color: #0B0712;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      padding-left: 2px;
-      box-shadow: 0 0 15px rgba(199, 125, 255, 0.4);
+      background: var(--pastel-pink);
+      border: none;
+      color: #1e1138;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 0 15px var(--pastel-pink);
+      transition: transform 0.2s ease;
     }
 
     .btn-play:hover {
-      background: #FFF;
-      color: #0B0712;
-      transform: scale(1.05);
-    }
-
-    .sound-bars {
-      display: flex;
-      align-items: flex-end;
-      gap: 3px;
-      height: 16px;
-      margin-left: 10px;
-    }
-
-    .bar {
-      width: 3px;
-      height: 100%;
-      background: #C77DFF;
-      border-radius: 2px;
-      opacity: 0.3;
-    }
-
-    .playing .bar {
-      opacity: 1;
-      animation: soundWave 1.2s infinite ease-in-out alternate;
-    }
-
-    .playing .bar:nth-child(1) { animation-delay: 0.1s; }
-    .playing .bar:nth-child(2) { animation-delay: 0.4s; }
-    .playing .bar:nth-child(3) { animation-delay: 0.2s; }
-    .playing .bar:nth-child(4) { animation-delay: 0.5s; }
-
-    @keyframes soundWave {
-      0% { height: 20%; }
-      100% { height: 100%; }
-    }
-
-    .playlist-drawer {
-      position: fixed;
-      bottom: 95px;
-      left: 50%;
-      transform: translateX(-50%) translateY(20px);
-      width: calc(100% - 40px);
-      max-width: 850px;
-      background: var(--glass-solid);
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(20px);
-      border-radius: 16px;
-      padding: 1.5rem;
-      z-index: 99;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-
-    .playlist-drawer.active {
-      opacity: 1;
-      visibility: visible;
-      transform: translateX(-50%) translateY(0);
-    }
-
-    .playlist-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-      font-size: 0.85rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: #C77DFF;
-    }
-
-    .song-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .song-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 14px;
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.02);
-      cursor: pointer;
-      transition: background 0.2s ease;
-      font-size: 0.85rem;
-    }
-
-    .song-item:hover, .song-item.active-song {
-      background: rgba(199, 125, 255, 0.15);
-      border: 1px solid rgba(199, 125, 255, 0.3);
-    }
-
-    .song-item .duration {
-      color: rgba(255, 255, 255, 0.4);
-      font-size: 0.8rem;
+      transform: scale(1.1);
     }
   </style>
 </head>
 <body>
 
+  <!-- Wand Glitter Canvas -->
   <canvas id="sparkle-canvas"></canvas>
-  <div class="glow-sphere"></div>
+
+  <!-- Floating Nebula Glows -->
+  <div class="nebula nebula-1"></div>
+  <div class="nebula nebula-2"></div>
 
   <nav>
-    <div class="logo">BANGTAN.STUDIO</div>
+    <div class="logo">✦ MAGIC BTS GALAXY ✦</div>
     <ul class="nav-links">
-      <li><a href="#discography">ERA</a></li>
-      <li><a href="#archives">ARCHIVE</a></li>
-      <li><a href="#magicshop">MAGIC SHOP</a></li>
+      <li><a href="#albums">DISCOGRAPHY</a></li>
+      <li><a href="#magic">MAGIC SHOP</a></li>
     </ul>
   </nav>
 
   <section class="hero">
-    <div class="badge">BORAHAE • 7 FOREVER</div>
-    <h1>We are not seven with you, <span class="glitter-text">we are together.</span></h1>
-    <p class="subtitle">An aesthetic space designed for Army. Move your mouse or tap anywhere to create custom purple glitter trails.</p>
+    <div class="whimsy-pill">✨ WELCOME TO THE MAGIC SHOP ✨</div>
+    <h1>A Dreamy Journey Through <span style="color:var(--pastel-pink)">All 7 Eras</span></h1>
+    <p class="subtitle">Explore every album from 2013 debut to current chapters. Hover over bubbles and wave your mouse to cast star magic!</p>
   </section>
 
-  <div class="cards-container" id="magicshop">
-    <!-- Interactive Magic Shop Quote Card -->
-    <div class="glass-card magic-shop-card" id="quoteCard">
-      <div>
-        <div class="card-icon">🔑</div>
-        <h3>Magic Shop Door</h3>
-        <p>On days you hate being yourself or feel like disappearing, open a door inside your heart.</p>
-        
-        <div class="quote-box">
-          <div class="quote-text" id="quoteText">"So show me, I'll show you."</div>
-          <div class="quote-source" id="quoteSource">— Magic Shop</div>
-        </div>
+  <!-- Complete BTS Album Eras Carousel -->
+  <section class="album-section" id="albums">
+    <div class="section-title">
+      <span>🌙</span> Complete Discography Galaxy <span>🌸</span>
+    </div>
+
+    <div class="carousel-container" id="albumCarousel">
+      <!-- Cards rendered dynamically via JS -->
+    </div>
+  </section>
+
+  <!-- Whimsical Magic Comfort Box -->
+  <section class="magic-box-section" id="magic">
+    <div class="magic-card">
+      <h3>🌸 Wish Upon A Star 🌸</h3>
+      <div class="quote-display" id="quoteDisplay">
+        "On days you hate being yourself, let's make a door inside your heart."
       </div>
-
-      <button class="btn-magic" id="magicBtn" onclick="generateQuote(event)">Open Door / Next Comfort</button>
+      <button class="btn-whimsy" onclick="castWish(event)">Cast Magic Wish ✨</button>
     </div>
+  </section>
 
-    <!-- Microcosmos Card -->
-    <div class="glass-card">
-      <div class="card-icon">✦</div>
-      <h3>Microcosmos</h3>
-      <p>Explore high-res visual concepts, tour archives, and album aesthetic breakdowns.</p>
-    </div>
-
-    <!-- Proof Archive Card -->
-    <div class="glass-card">
-      <div class="card-icon">✦</div>
-      <h3>Proof Archive</h3>
-      <p>Timeline tracking eras from 2013 to current solo chapters with curated media.</p>
-    </div>
-  </div>
-
-  <!-- Slide-Up Playlist Drawer -->
-  <div class="playlist-drawer" id="playlistDrawer">
-    <div class="playlist-header">
-      <span>Ambient Soundscapes</span>
-      <span style="font-size:0.75rem; color:rgba(255,255,255,0.4);">3 Tracks</span>
-    </div>
-    <ul class="song-list">
-      <li class="song-item active-song" onclick="selectTrack(0)">
-        <div>
-          <strong>Mikrokosmos</strong> <span style="color:rgba(255,255,255,0.5);">— Ambient Piano</span>
-        </div>
-        <span class="duration">3:42</span>
-      </li>
-      <li class="song-item" onclick="selectTrack(1)">
-        <div>
-          <strong>Magic Shop</strong> <span style="color:rgba(255,255,255,0.5);">— Lofi Chill</span>
-        </div>
-        <span class="duration">4:10</span>
-      </li>
-      <li class="song-item" onclick="selectTrack(2)">
-        <div>
-          <strong>Spring Day</strong> <span style="color:rgba(255,255,255,0.5);">— Orchestral Loop</span>
-        </div>
-        <span class="duration">4:38</span>
-      </li>
-    </ul>
-  </div>
-
-  <!-- Persistent Player Bar -->
+  <!-- Simple Audio Player Bar -->
   <div class="player-bar">
-    <div class="track-info">
-      <div class="album-art" id="albumArt">🔮</div>
-      <div class="track-details">
-        <h4 id="trackTitle">Mikrokosmos</h4>
-        <p id="trackSub">Map of the Soul • Ambient</p>
-      </div>
-      <div class="sound-bars" id="soundBars">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-      </div>
+    <div class="track-details">
+      <h4 id="currentTitle">Mikrokosmos Ambient</h4>
+      <p id="currentEra">Map of the Soul Era</p>
     </div>
-
-    <div class="controls">
-      <button class="btn-control" onclick="prevTrack()">⏮</button>
-      <button class="btn-control btn-play" id="playBtn" onclick="togglePlay()">▶</button>
-      <button class="btn-control" onclick="nextTrack()">⏭</button>
-      <button class="btn-control" onclick="togglePlaylist()" style="margin-left: 10px; font-size: 0.9rem;" title="Playlist">☰</button>
-    </div>
+    <button class="btn-play" id="playBtn" onclick="toggleAudio()">▶</button>
   </div>
 
-  <audio id="audioPlayer" loop>
-    <source id="audioSource" src="https://actions.google.com/sounds/v1/ambiences/gentle_rain.ogg" type="audio/ogg">
+  <audio id="bgAudio" loop>
+    <source src="https://actions.google.com/sounds/v1/ambiences/gentle_rain.ogg" type="audio/ogg">
   </audio>
 
   <script>
-    // --- Magic Shop Quotes Dataset ---
-    const quotes = [
-      {
-        text: "You gave me the best of me, so you'll give you the best of you.",
-        source: "— Magic Shop"
-      },
-      {
-        text: "The dawn right before the sun rises is the darkest.",
-        source: "— Tomorrow"
-      },
-      {
-        text: "Even in the far future, never forget the you of right now.",
-        source: "— Tomorrow"
-      },
-      {
-        text: "One light is 100,000 lights... We shine brightest when we're together.",
-        source: "— Mikrokosmos"
-      },
-      {
-        text: "It’s okay to stop, there’s no need to run without knowing the reason.",
-        source: "— Paradise"
-      },
-      {
-        text: "No darkness, no season can last forever.",
-        source: "— Spring Day"
-      }
+    // --- Complete BTS Album Discography Dataset ---
+    const btsAlbums = [
+      { year: "2013", title: "2 Cool 4 Skool", era: "Debut Era", icon: "🛹", c1: "#ff4b4b", c2: "#2b2b2b" },
+      { year: "2013", title: "O!RUL8,2?", era: "Concept Era", icon: "🎒", c1: "#ffffff", c2: "#888888" },
+      { year: "2014", title: "Skool Luv Affair", era: "Boy In Luv Era", icon: "💌", c1: "#ff758c", c2: "#ff7eb3" },
+      { year: "2014", title: "Dark & Wild", era: "First Studio Album", icon: "⚡", c1: "#434343", c2: "#000000" },
+      { year: "2015", title: "HYYH Pt. 1 & 2", era: "The Most Beautiful Moment", icon: "🌸", c1: "#b8c6db", c2: "#f5f7fa" },
+      { year: "2016", title: "Young Forever", era: "Hot Air Balloon Era", icon: "🎈", c1: "#89f7fe", c2: "#66a6ff" },
+      { year: "2016", title: "Wings", era: "Blood Sweat & Tears", icon: "🕊️", c1: "#141e30", c2: "#243b55" },
+      { year: "2017", title: "Love Yourself: Her", era: "Serendipity & DNA", icon: "🌷", c1: "#ffdde1", c2: "#ee9ca7" },
+      { year: "2018", title: "Love Yourself: Tear", era: "Fake Love & Singularity", icon: "💧", c1: "#2c3e50", c2: "#000000" },
+      { year: "2018", title: "Love Yourself: Answer", era: "Idol & Epiphany", icon: "💖", c1: "#f3a683", c2: "#f7d794" },
+      { year: "2019", title: "MOTS: Persona", era: "Boy With Luv", icon: "🎀", c1: "#ff9a9e", c2: "#fecfef" },
+      { year: "2020", title: "MOTS: 7", era: "ON & Black Swan", icon: "🌌", c1: "#a1c4fd", c2: "#c2e9fb" },
+      { year: "2020", title: "BE", era: "Life Goes On & Dynamite", icon: "🎨", c1: "#e2ebf0", c2: "#cfd9df" },
+      { year: "2022", title: "Proof", era: "Antology Chapter 1", icon: "💎", c1: "#bdc3c7", c2: "#2c3e50" }
     ];
 
-    let currentQuoteIndex = 0;
+    // Render Album Carousel
+    const carousel = document.getElementById('albumCarousel');
+    btsAlbums.forEach(album => {
+      const card = document.createElement('div');
+      card.className = 'album-card';
+      card.style.setProperty('--c1', album.c1);
+      card.style.setProperty('--c2', album.c2);
+      card.innerHTML = `
+        <div class="album-year">${album.year}</div>
+        <div class="album-cover">${album.icon}</div>
+        <div class="album-title">${album.title}</div>
+        <div class="album-era">${album.era}</div>
+      `;
+      card.onclick = () => selectAlbum(album);
+      carousel.appendChild(card);
+    });
 
-    function generateQuote(e) {
-      const quoteText = document.getElementById('quoteText');
-      const quoteSource = document.getElementById('quoteSource');
-      const card = document.getElementById('quoteCard');
+    function selectAlbum(album) {
+      document.getElementById('currentTitle').innerText = album.title;
+      document.getElementById('currentEra').innerText = `${album.year} • ${album.era}`;
+    }
 
-      // Fade out
-      quoteText.style.opacity = '0';
-      quoteText.style.transform = 'translateY(5px)';
+    // --- Whimsical Wishes Dataset ---
+    const wishes = [
+      "No darkness, no season can last forever. Spring will come! 🌸",
+      "You shine brightest when your heart is peaceful. ✨",
+      "There is a galaxy inside you waiting to light up. 🌙",
+      "You gave me the best of me, so you'll give you the best of you. 💖",
+      "It's okay to take a pause; you are already doing wonderful. 🌷"
+    ];
 
-      // Trigger extra sparkle explosion on button click
+    function castWish(e) {
+      const display = document.getElementById('quoteDisplay');
+      display.style.opacity = '0';
+
+      // Burst 30 star particles
       const rect = e.target.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      for (let i = 0; i < 25; i++) {
-        particles.push(new GlitterParticle(centerX, centerY));
+      for (let i = 0; i < 35; i++) {
+        particles.push(new WandParticle(rect.left + rect.width / 2, rect.top));
       }
 
       setTimeout(() => {
-        currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
-        quoteText.innerText = `"${quotes[currentQuoteIndex].text}"`;
-        quoteSource.innerText = quotes[currentQuoteIndex].source;
-
-        // Fade back in
-        quoteText.style.opacity = '1';
-        quoteText.style.transform = 'translateY(0)';
+        const randomWish = wishes[Math.floor(Math.random() * wishes.length)];
+        display.innerText = `"${randomWish}"`;
+        display.style.opacity = '1';
       }, 250);
     }
 
-    // --- Audio Player Logic ---
-    const playlist = [
-      {
-        title: "Mikrokosmos",
-        subtitle: "Map of the Soul • Ambient",
-        icon: "🔮",
-        src: "https://actions.google.com/sounds/v1/ambiences/gentle_rain.ogg"
-      },
-      {
-        title: "Magic Shop",
-        subtitle: "Love Yourself • Lofi",
-        icon: "✨",
-        src: "https://actions.google.com/sounds/v1/weather/rain_heavy_loud.ogg"
-      },
-      {
-        title: "Spring Day",
-        subtitle: "YNWA • Orchestral",
-        icon: "🌸",
-        src: "https://actions.google.com/sounds/v1/ambiences/meadow_morning.ogg"
-      }
-    ];
-
-    let currentTrackIndex = 0;
-    let isPlaying = false;
-
-    const audio = document.getElementById('audioPlayer');
-    const audioSource = document.getElementById('audioSource');
-    const playBtn = document.getElementById('playBtn');
-    const soundBars = document.getElementById('soundBars');
-    const playlistDrawer = document.getElementById('playlistDrawer');
-
-    function togglePlay() {
-      if (isPlaying) {
+    // --- Audio Toggle ---
+    const audio = document.getElementById('bgAudio');
+    let playing = false;
+    function toggleAudio() {
+      const btn = document.getElementById('playBtn');
+      if (playing) {
         audio.pause();
-        playBtn.innerText = '▶';
-        soundBars.classList.remove('playing');
+        btn.innerText = '▶';
       } else {
         audio.play();
-        playBtn.innerText = '⏸';
-        soundBars.classList.add('playing');
+        btn.innerText = '⏸';
       }
-      isPlaying = !isPlaying;
+      playing = !playing;
     }
 
-    function selectTrack(index) {
-      currentTrackIndex = index;
-      const track = playlist[index];
-      
-      document.getElementById('trackTitle').innerText = track.title;
-      document.getElementById('trackSub').innerText = track.subtitle;
-      document.getElementById('albumArt').innerText = track.icon;
-      
-      audioSource.src = track.src;
-      audio.load();
-      
-      if (isPlaying) audio.play();
-
-      const items = document.querySelectorAll('.song-item');
-      items.forEach((item, idx) => {
-        item.classList.toggle('active-song', idx === index);
-      });
-    }
-
-    function nextTrack() {
-      currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
-      selectTrack(currentTrackIndex);
-    }
-
-    function prevTrack() {
-      currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
-      selectTrack(currentTrackIndex);
-    }
-
-    function togglePlaylist() {
-      playlistDrawer.classList.toggle('active');
-    }
-
-    // --- Interactive Glitter Trail Engine ---
+    // --- Starry Wand Particles Canvas ---
     const canvas = document.getElementById('sparkle-canvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
 
-    function resizeCanvas() {
+    function resize() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
+    window.addEventListener('resize', resize);
+    resize();
 
-    class GlitterParticle {
+    class WandParticle {
       constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.size = Math.random() * 3 + 1;
-        this.speedX = (Math.random() - 0.5) * 2;
-        this.speedY = (Math.random() - 0.5) * 2 - 0.5;
-        const colors = ['#C77DFF', '#E0AFA0', '#FFFFFF', '#9D4EDD', '#E8C5E8'];
+        this.size = Math.random() * 4 + 2;
+        this.speedX = (Math.random() - 0.5) * 2.5;
+        this.speedY = (Math.random() - 0.5) * 2.5 - 0.5;
+        const colors = ['#D8B4F8', '#FFC8DD', '#BDE0FE', '#FEF9C3', '#FFFFFF'];
         this.color = colors[Math.floor(Math.random() * colors.length)];
         this.opacity = 1;
-        this.decay = Math.random() * 0.02 + 0.01;
+        this.decay = Math.random() * 0.02 + 0.015;
       }
 
       update() {
@@ -724,31 +542,24 @@
         ctx.globalAlpha = this.opacity;
         ctx.fillStyle = this.color;
         
+        // Draw 5-point Star
         ctx.beginPath();
-        const s = this.size;
-        ctx.moveTo(this.x, this.y - s * 2);
-        ctx.lineTo(this.x + s / 2, this.y - s / 2);
-        ctx.lineTo(this.x + s * 2, this.y);
-        ctx.lineTo(this.x + s / 2, this.y + s / 2);
-        ctx.lineTo(this.x, this.y + s * 2);
-        ctx.lineTo(this.x - s / 2, this.y + s / 2);
-        ctx.lineTo(this.x - s * 2, this.y);
-        ctx.lineTo(this.x - s / 2, this.y - s / 2);
+        for (let i = 0; i < 5; i++) {
+          ctx.lineTo(Math.cos((18 + i * 72) * Math.PI / 180) * this.size + this.x,
+                     -Math.sin((18 + i * 72) * Math.PI / 180) * this.size + this.y);
+          ctx.lineTo(Math.cos((54 + i * 72) * Math.PI / 180) * (this.size/2) + this.x,
+                     -Math.sin((54 + i * 72) * Math.PI / 180) * (this.size/2) + this.y);
+        }
         ctx.closePath();
         ctx.fill();
         ctx.restore();
       }
     }
 
-    function addSparkles(e) {
-      for (let i = 0; i < 3; i++) {
-        particles.push(new GlitterParticle(e.clientX, e.clientY));
+    window.addEventListener('mousemove', (e) => {
+      for (let i = 0; i < 2; i++) {
+        particles.push(new WandParticle(e.clientX, e.clientY));
       }
-    }
-
-    window.addEventListener('mousemove', addSparkles);
-    window.addEventListener('touchmove', (e) => {
-      if (e.touches.length > 0) addSparkles(e.touches[0]);
     });
 
     function animate() {
