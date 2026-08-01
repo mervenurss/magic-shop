@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BTS Ambient Sparkle & Magic Shop</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
+
+    :root {
+      --bg-dark: #0B0712;
+      --accent-purple: #9D4EDD;
+      --accent-glow: #E0AFA0;
+      --glass-bg: rgba(255, 255, 255, 0.04);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --glass-solid: rgba(18, 12, 28, 0.85);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: #FFFFFF;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      padding-bottom: 120px;
+    }
+
+    #sparkle-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .glow-sphere {
+      position: absolute;
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(157, 78, 221, 0.3) 0%, rgba(0,0,0,0) 70%);
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      filter: blur(90px);
+      z-index: 1;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2rem 10%;
+      position: relative;
+      z-index: 20;
+    }
+
+    .logo {
+      font-weight: 700;
+      letter-spacing: 3px;
+      font-size: 1.2rem;
+      background: linear-gradient(135deg, #FFF, var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #FFF;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 1rem 2rem 1rem;
+      position: relative;
+      z-index: 20;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 20px;
+      background: rgba(157, 78, 221, 0.15);
+      border: 1px solid rgba(157, 78, 221, 0.3);
+      color: #C77DFF;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      max-width: 800px;
+      margin-bottom: 1.5rem;
+    }
+
+    .glitter-text {
+      background: linear-gradient(
+        135deg,
+        #FFFFFF 0%,
+        #E0AFA0 25%,
+        #C77DFF 50%,
+        #FFFFFF 75%,
+        #7B2CBF 100%
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shine 4s linear infinite;
+    }
+
+    @keyframes shine {
+      to { background-position: 200% center; }
+    }
+
+    p.subtitle {
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 500px;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    /* Cards Grid */
+    .cards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 950px;
+      padding: 0 2rem;
+      margin: 2.5rem auto 4rem auto;
+      position: relative;
+      z-index: 20;
+    }
+
+    .glass-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .glass-card:hover {
+      border-color: rgba(199, 125, 255, 0.5);
+      box-shadow: 0 10px 30px rgba(157, 78, 221, 0.2);
+    }
+
+    .card-icon {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #C77DFF;
+    }
+
+    .glass-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .glass-card p {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.5);
+      line-height: 1.5;
+    }
+
+    /* Magic Shop Quote Card Styling */
+    .magic-shop-card {
+      grid-column: span 1;
+      background: linear-gradient(145deg, rgba(157, 78, 221, 0.12), rgba(11, 7, 18, 0.6));
+      border: 1px solid rgba(199, 125, 255, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 850px) {
+      .magic-shop-card {
+        grid-column: span 2;
+      }
+    }
+
+    .quote-box {
+      margin: 1.5rem 0;
+      min-height: 90px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .quote-text {
+      font-size: 1.15rem;
+      font-weight: 300;
+      line-height: 1.6;
+      color: #FFFFFF;
+      font-style: italic;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .quote-source {
+      font-size: 0.8rem;
+      color: #C77DFF;
+      margin-top: 0.8rem;
+      font-style: normal;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .btn-magic {
+      align-self: flex-start;
+      background: linear-gradient(135deg, #9D4EDD, #C77DFF);
+      color: #0B0712;
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(157, 78, 221, 0.3);
+    }
+
+    .btn-magic:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(199, 125, 255, 0.5);
+      background: #FFFFFF;
+    }
+
+    /* Player Bar & Drawer */
+    .player-bar {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 40px);
+      max-width: 850px;
+      background: var(--glass-solid);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(16px);
+      border-radius: 20px;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 100;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    }
+
+    .track-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 200px;
+    }
+
+    .album-art {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #7B2CBF, #C77DFF);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(157, 78, 221, 0.4);
+    }
+
+    .track-details h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .track-details p {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-control {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .btn-control:hover {
+      color: #FFF;
+      transform: scale(1.1);
+    }
+
+    .btn-play {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #C77DFF;
+      color: #0B0712;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      padding-left: 2px;
+      box-shadow: 0 0 15px rgba(199, 125, 255, 0.4);
+    }
+
+    .btn-play:hover {
+      background: #FFF;
+      color: #0B0712;
+      transform: scale(1.05);
+    }
+
+    .sound-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 16px;
+      margin-left: 10px;
+    }
+
+    .bar {
+      width: 3px;
+      height: 100%;
+      background: #C77DFF;
+      border-radius: 2px;
+      opacity: 0.3;
+    }
+
+    .playing .bar {
+      opacity: 1;
+      animation: soundWave 1.2s infinite ease-in-out alternate;
+    }
+
+    .playing .bar:nth-child(1) { animation-delay: 0.1s; }
+    .playing .bar:nth-child(2) { animation-delay: 0.4s; }
+    .playing .bar:nth-child(3) { animation-delay: 0.2s; }
+    .playing .bar:nth-child(4) { animation-delay: 0.5s; }
+
+    @keyframes soundWave {
+      0% { height: 20%; }
+      100% { height: 100%; }
+    }
+
+    .playlist-drawer {
+      position: fixed;
+      bottom: 95px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      width: calc(100% - 40px);
+      max-width: 850px;
+      background: var(--glass-solid);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(20px);
+      border-radius: 16px;
+      padding: 1.5rem;
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .playlist-drawer.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .playlist-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #C77DFF;
+    }
+
+    .song-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .song-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.02);
+      cursor: pointer;
+      transition: background 0.2s ease;
+      font-size: 0.85rem;
+    }
+
+    .song-item:hover, .song-item.active-song {
+      background: rgba(199, 125, 255, 0.15);
+      border: 1px solid rgba(199, 125, 255, 0.3);
+    }
+
+    .song-item .duration {
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="sparkle-canvas"></canvas>
+  <div class="glow-sphere"></div>
+
+  <nav>
+    <div class="logo">BANGTAN.STUDIO</div>
+    <ul class="nav-links">
+      <li><a href="#discography">ERA</a></li>
+      <li><a href="#archives">ARCHIVE</a></li>
+      <li><a href="#magicshop">MAGIC SHOP</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="badge">BORAHAE • 7 FOREVER</div>
+    <h1>We are not seven with you, <span class="glitter-text">we are together.</span></h1>
+    <p class="subtitle">An aesthetic space designed for Army. Move your mouse or tap anywhere to create custom purple glitter trails.</p>
+  </section>
+
+  <div class="cards-container" id="magicshop">
+    <!-- Interactive Magic Shop Quote Card -->
+    <div class="glass-card magic-shop-card" id="quoteCard">
+      <div>
+        <div class="card-icon">🔑</div>
+        <h3>Magic Shop Door</h3>
+        <p>On days you hate being yourself or feel like disappearing, open a door inside your heart.</p>
+        
+        <div class="quote-box">
+          <div class="quote-text" id="quoteText">"So show me, I'll show you."</div>
+          <div class="quote-source" id="quoteSource">— Magic Shop</div>
+        </div>
+      </div>
+
+      <button class="btn-magic" id="magicBtn" onclick="generateQuote(event)">Open Door / Next Comfort</button>
+    </div>
+
+    <!-- Microcosmos Card -->
+    <div class="glass-card">
+      <div class="card-icon">✦</div>
+      <h3>Microcosmos</h3>
+      <p>Explore high-res visual concepts, tour archives, and album aesthetic breakdowns.</p>
+    </div>
+
+    <!-- Proof Archive Card -->
+    <div class="glass-card">
+      <div class="card-icon">✦</div>
+      <h3>Proof Archive</h3>
+      <p>Timeline tracking eras from 2013 to current solo chapters with curated media.</p>
+    </div>
+  </div>
+
+  <!-- Slide-Up Playlist Drawer -->
+  <div class="playlist-drawer" id="playlistDrawer">
+    <div class="playlist-header">
+      <span>Ambient Soundscapes</span>
+      <span style="font-size:0.75rem; color:rgba(255,255,255,0.4);">3 Tracks</span>
+    </div>
+    <ul class="song-list">
+      <li class="song-item active-song" onclick="selectTrack(0)">
+        <div>
+          <strong>Mikrokosmos</strong> <span style="color:rgba(255,255,255,0.5);">— Ambient Piano</span>
+        </div>
+        <span class="duration">3:42</span>
+      </li>
+      <li class="song-item" onclick="selectTrack(1)">
+        <div>
+          <strong>Magic Shop</strong> <span style="color:rgba(255,255,255,0.5);">— Lofi Chill</span>
+        </div>
+        <span class="duration">4:10</span>
+      </li>
+      <li class="song-item" onclick="selectTrack(2)">
+        <div>
+          <strong>Spring Day</strong> <span style="color:rgba(255,255,255,0.5);">— Orchestral Loop</span>
+        </div>
+        <span class="duration">4:38</span>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Persistent Player Bar -->
+  <div class="player-bar">
+    <div class="track-info">
+      <div class="album-art" id="albumArt">🔮</div>
+      <div class="track-details">
+        <h4 id="trackTitle">Mikrokosmos</h4>
+        <p id="trackSub">Map of the Soul • Ambient</p>
+      </div>
+      <div class="sound-bars" id="soundBars">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="btn-control" onclick="prevTrack()">⏮</button>
+      <button class="btn-control btn-play" id="playBtn" onclick="togglePlay()">▶</button>
+      <button class="btn-control" onclick="nextTrack()">⏭</button>
+      <button class="btn-control" onclick="togglePlaylist()" style="margin-left: 10px; font-size: 0.9rem;" title="Playlist">☰</button>
+    </div>
+  </div>
+
+  <audio id="audioPlayer" loop>
+    <source id="audioSource" src="https://actions.google.com/sounds/v1/ambiences/gentle_rain.ogg" type="audio/ogg">
+  </audio>
+
+  <script>
+    // --- Magic Shop Quotes Dataset ---
+    const quotes = [
+      {
+        text: "You gave me the best of me, so you'll give you the best of you.",
+        source: "— Magic Shop"
+      },
+      {
+        text: "The dawn right before the sun rises is the darkest.",
+        source: "— Tomorrow"
+      },
+      {
+        text: "Even in the far future, never forget the you of right now.",
+        source: "— Tomorrow"
+      },
+      {
+        text: "One light is 100,000 lights... We shine brightest when we're together.",
+        source: "— Mikrokosmos"
+      },
+      {
+        text: "It’s okay to stop, there’s no need to run without knowing the reason.",
+        source: "— Paradise"
+      },
+      {
+        text: "No darkness, no season can last forever.",
+        source: "— Spring Day"
+      }
+    ];
+
+    let currentQuoteIndex = 0;
+
+    function generateQuote(e) {
+      const quoteText = document.getElementById('quoteText');
+      const quoteSource = document.getElementById('quoteSource');
+      const card = document.getElementById('quoteCard');
+
+      // Fade out
+      quoteText.style.opacity = '0';
+      quoteText.style.transform = 'translateY(5px)';
+
+      // Trigger extra sparkle explosion on button click
+      const rect = e.target.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      for (let i = 0; i < 25; i++) {
+        particles.push(new GlitterParticle(centerX, centerY));
+      }
+
+      setTimeout(() => {
+        currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+        quoteText.innerText = `"${quotes[currentQuoteIndex].text}"`;
+        quoteSource.innerText = quotes[currentQuoteIndex].source;
+
+        // Fade back in
+        quoteText.style.opacity = '1';
+        quoteText.style.transform = 'translateY(0)';
+      }, 250);
+    }
+
+    // --- Audio Player Logic ---
+    const playlist = [
+      {
+        title: "Mikrokosmos",
+        subtitle: "Map of the Soul • Ambient",
+        icon: "🔮",
+        src: "https://actions.google.com/sounds/v1/ambiences/gentle_rain.ogg"
+      },
+      {
+        title: "Magic Shop",
+        subtitle: "Love Yourself • Lofi",
+        icon: "✨",
+        src: "https://actions.google.com/sounds/v1/weather/rain_heavy_loud.ogg"
+      },
+      {
+        title: "Spring Day",
+        subtitle: "YNWA • Orchestral",
+        icon: "🌸",
+        src: "https://actions.google.com/sounds/v1/ambiences/meadow_morning.ogg"
+      }
+    ];
+
+    let currentTrackIndex = 0;
+    let isPlaying = false;
+
+    const audio = document.getElementById('audioPlayer');
+    const audioSource = document.getElementById('audioSource');
+    const playBtn = document.getElementById('playBtn');
+    const soundBars = document.getElementById('soundBars');
+    const playlistDrawer = document.getElementById('playlistDrawer');
+
+    function togglePlay() {
+      if (isPlaying) {
+        audio.pause();
+        playBtn.innerText = '▶';
+        soundBars.classList.remove('playing');
+      } else {
+        audio.play();
+        playBtn.innerText = '⏸';
+        soundBars.classList.add('playing');
+      }
+      isPlaying = !isPlaying;
+    }
+
+    function selectTrack(index) {
+      currentTrackIndex = index;
+      const track = playlist[index];
+      
+      document.getElementById('trackTitle').innerText = track.title;
+      document.getElementById('trackSub').innerText = track.subtitle;
+      document.getElementById('albumArt').innerText = track.icon;
+      
+      audioSource.src = track.src;
+      audio.load();
+      
+      if (isPlaying) audio.play();
+
+      const items = document.querySelectorAll('.song-item');
+      items.forEach((item, idx) => {
+        item.classList.toggle('active-song', idx === index);
+      });
+    }
+
+    function nextTrack() {
+      currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+      selectTrack(currentTrackIndex);
+    }
+
+    function prevTrack() {
+      currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+      selectTrack(currentTrackIndex);
+    }
+
+    function togglePlaylist() {
+      playlistDrawer.classList.toggle('active');
+    }
+
+    // --- Interactive Glitter Trail Engine ---
+    const canvas = document.getElementById('sparkle-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class GlitterParticle {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = (Math.random() - 0.5) * 2;
+        this.speedY = (Math.random() - 0.5) * 2 - 0.5;
+        const colors = ['#C77DFF', '#E0AFA0', '#FFFFFF', '#9D4EDD', '#E8C5E8'];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.opacity = 1;
+        this.decay = Math.random() * 0.02 + 0.01;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.opacity -= this.decay;
+      }
+
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = this.color;
+        
+        ctx.beginPath();
+        const s = this.size;
+        ctx.moveTo(this.x, this.y - s * 2);
+        ctx.lineTo(this.x + s / 2, this.y - s / 2);
+        ctx.lineTo(this.x + s * 2, this.y);
+        ctx.lineTo(this.x + s / 2, this.y + s / 2);
+        ctx.lineTo(this.x, this.y + s * 2);
+        ctx.lineTo(this.x - s / 2, this.y + s / 2);
+        ctx.lineTo(this.x - s * 2, this.y);
+        ctx.lineTo(this.x - s / 2, this.y - s / 2);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    function addSparkles(e) {
+      for (let i = 0; i < 3; i++) {
+        particles.push(new GlitterParticle(e.clientX, e.clientY));
+      }
+    }
+
+    window.addEventListener('mousemove', addSparkles);
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches.length > 0) addSparkles(e.touches[0]);
+    });
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+        if (particles[i].opacity <= 0) {
+          particles.splice(i, 1);
+          i--;
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+</body>
+</html>
